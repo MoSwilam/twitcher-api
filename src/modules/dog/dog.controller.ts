@@ -10,7 +10,9 @@ import {
 import { DogService } from './dog.service';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Dog API')
 @Controller('dog')
 export class DogController {
   constructor(private readonly dogService: DogService) {}

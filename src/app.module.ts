@@ -16,8 +16,6 @@ import { ConfigModule } from '@nestjs/config';
     }),
     CatModule,
     DogModule
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {}

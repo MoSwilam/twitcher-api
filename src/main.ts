@@ -25,10 +25,13 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle('Relayz API')
-    .setDescription('Relayz API documentation')
+    .setTitle('Twitcher API')
+    .setDescription('Twitcher API documentation')
     .setVersion('1.0')
     .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup(`api-docs`, app, document);
 
   const port = process.env.PORT;
   await app.listen(port);

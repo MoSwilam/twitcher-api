@@ -5,6 +5,11 @@ LOCKFILE = yarn.lock
 dev:
 	yarn start:dev
 
+prod:
+	yarn build
+	yarn start:prod
+
+
 reinit-dev:
 	rm -rf $(DIST_DIR)
 	rm -rf $(NODE_MODULES_DIR)
