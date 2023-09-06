@@ -17,11 +17,6 @@ import { ApiTags } from '@nestjs/swagger';
 export class DogController {
   constructor(private readonly dogService: DogService) {}
 
-  @Post()
-  create(@Body() createDogDto: CreateDogDto) {
-    return this.dogService.create(createDogDto);
-  }
-
   @Get()
   findAll() {
     return this.dogService.findAll();

@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
+import { HttpClientService } from 'src/shared/http/http.service';
+import { HttpMethod, IRequestPayload } from 'src/shared/constants';
 
 @Injectable()
 export class DogService {
-  create(createDogDto: CreateDogDto) {
-    return 'This action adds a new dog';
-  }
 
   findAll() {
     return `This action returns all dog`;

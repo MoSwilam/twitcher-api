@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { HttpModule } from '@nestjs/axios';
 import { CatModule } from './modules/cat/cat.module';
 import { DogModule } from './modules/dog/dog.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './modules/user/user.module';
 
 
 @Module({
@@ -14,8 +14,10 @@ import { ConfigModule } from '@nestjs/config';
       }.env`,
       isGlobal: true,
     }),
+    HttpModule,
     CatModule,
-    DogModule
+    DogModule,
+    UserModule
   ]
 })
 export class AppModule {}
