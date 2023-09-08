@@ -20,7 +20,6 @@ export class HttpClientService {
       };
 
       const res = await this.httpsService.request(options).toPromise();
-      console.log({ res: res });
       return res.data;
     } catch (e) {
       const message = e.response.data || e.response.message || e.message || 'ambiguous';

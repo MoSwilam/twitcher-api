@@ -2,14 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpMethod, IRequestPayload } from '../../shared/constants';
 import { HttpClientService } from '../../shared/http/http.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User, UserRepository } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly httpsService: HttpClientService) {}
+  constructor(private readonly httpsService: HttpClientService,
+      @InjectRepository(User) private readonly userRepository: UserRepository
+    ) {}
 
   async generateUser() {
     const url2 = 'https://dog.ceo/api/breeds/image/random';
-    const url = 'https://randomuser.me/api/?results=2'
+    const url = 'https://randomuser.me/api/'
 
     const method = HttpMethod.GET;
     const requestPayload: IRequestPayload = {
@@ -17,8 +22,14 @@ export class UserService {
       method,
     };
     const res = await this.httpsService.request(requestPayload);
-    console.log({ res: res });
-    return res;
+    const [user] = res.results;
+
+    const newUser = new User();
+    newUser.name = user.name.first + ' ' + user.name.last;
+    newUser.email = user.email;
+    newUser.country = user.location.country;
+    newUser.age = user.dob.age
+    return await this.userRepository.save(newUser);
   }
 
   findAll() {
