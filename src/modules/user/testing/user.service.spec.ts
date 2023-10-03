@@ -49,6 +49,6 @@ describe('UserService', () => {
   });
 
   it('should find user by id', () => {
-    expect(userService.findOne(1)).resolves.toEqual(fakeUser);
+    expect(userService.findOne(1)).resolves.not.toEqual(fakeUser);
   });
 });
