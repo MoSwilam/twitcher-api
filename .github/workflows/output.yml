@@ -14,6 +14,6 @@ jobs:
             const { data } = await github.repos.get({ owner, repo });
             return JSON.stringify(data);
       - name: Print information
-        run: echo "${{ steps.info.outputs.result }}"
+        run: echo "${{ toJson(steps.info.outputs.result) }}"
       - name: Output Github context
         run: echo "${{ toJson(github) }}"
