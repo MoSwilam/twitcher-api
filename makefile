@@ -5,9 +5,8 @@ LOCKFILE = yarn.lock
 clean:
 	rm -rf $(DIST_DIR)
 	rm -rf $(NODE_MODULES_DIR)
-	rm $(LOCKFILE)
-	npm run install
-	npm run build
+	yarn install
+	yarn run build
 
 dev:
 	yarn run start:dev
@@ -26,8 +25,8 @@ du:
 reinit-dev:
 	rm -rf $(DIST_DIR)
 	rm -rf $(NODE_MODULES_DIR)
-	npm install
-	npm run build
+	yarn install
+	make dev
 
 reinit-prod:
 	rm -rf $(DIST_DIR)

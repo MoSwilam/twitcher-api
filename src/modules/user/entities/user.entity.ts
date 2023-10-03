@@ -1,4 +1,5 @@
-import { Column, Entity, EntityRepository, PrimaryGeneratedColumn, Repository } from 'typeorm';
+import { UpdateCatDto } from 'src/modules/cat/dto/update-cat.dto';
+import { Column, CreateDateColumn, Entity, EntityRepository, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,6 +17,12 @@ export class User {
 
   @Column({ type: 'int' })
   age: number;
+
+  @CreateDateColumn({ name: 'createdAt' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updatedAt' })
+  updatedAt: Date;
 }
 
 

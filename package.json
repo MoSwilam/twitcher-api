@@ -2,7 +2,7 @@
   "name": "twitcher-api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Mohamed Swilam",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -80,5 +80,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "main": "main.ts"
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpMethod, IRequestPayload } from '../../shared/constants';
 import { HttpClientService } from '../../shared/http/http.service';
@@ -8,8 +8,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly httpsService: HttpClientService,
-      @InjectRepository(User) private readonly userRepository: UserRepository
+  constructor(
+      private readonly httpsService: HttpClientService,
+      @InjectRepository(User)
+      private readonly userRepository: UserRepository
     ) {}
 
   async generateUser() {
@@ -36,8 +38,12 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User #${id} not found`);
+    }
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
