@@ -4,16 +4,5 @@ jobs:
   info:
     runs-on: ubuntu-latest
     steps:
-      - name: Get information
-        uses: actions/github-script@v3
-        id: info
-        with:
-          result-encoding: string
-          script: |
-            const { owner, repo } = context.repo;
-            const { data } = await github.repos.get({ owner, repo });
-            return JSON.stringify(data);
-      - name: Print information
-        run: echo "${{ toJson(steps.info.outputs.result) }}"
       - name: Output Github context
         run: echo "${{ toJson(github) }}"
