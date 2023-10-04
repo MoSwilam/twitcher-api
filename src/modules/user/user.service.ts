@@ -4,14 +4,16 @@ import { HttpMethod, IRequestPayload } from '../../shared/constants';
 import { HttpClientService } from '../../shared/http/http.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRepository } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
 
 @Injectable()
 export class UserService {
   constructor(
       private readonly httpsService: HttpClientService,
       @InjectRepository(User)
-      private readonly userRepository: UserRepository
+      private readonly userRepository: UserRepository,
+      private eventEmitter: EventEmitter2
     ) {}
 
   async generateUser() {
@@ -31,7 +33,9 @@ export class UserService {
     newUser.email = user.email;
     newUser.country = user.location.country;
     newUser.age = user.dob.age
-    return await this.userRepository.save(newUser);
+    const saved = await this.userRepository.save(newUser);
+    this.eventEmitter.emit('user.created', saved);
+    return saved;
   }
 
   findAll() {
