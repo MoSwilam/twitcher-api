@@ -1,4 +1,4 @@
-name: Deployment
+name: ENV VARIABLES
 on:
   push:
     branches:
@@ -27,8 +27,8 @@ jobs:
           key: npm-deps-${{ hashFiles('**/yarn.lock.json') }}
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:$APP_PORT
+      # - name: Run server
+      #   run: npm start & npx wait-on http://127.0.0.1:$APP_PORT
       - name: Run tests
         run: yarn test
       - name: Output information
