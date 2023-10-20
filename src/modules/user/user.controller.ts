@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User API')
 @Controller('user')
@@ -10,8 +10,15 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('/generate')
+  @ApiOperation({ summary: 'Generate a user with external api' })
   create() {
     return this.userService.generateUser();
+  }
+
+  @Post('register')
+  @ApiOperation({ summary: 'Register user' })
+  registerUser(@Body() createUserDto: CreateUserDto) {
+    return this.userService.registerUser(createUserDto);
   }
 
   @Get()

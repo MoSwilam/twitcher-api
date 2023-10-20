@@ -5,6 +5,9 @@ import { HttpClientService } from '../../shared/http/http.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRepository } from './entities/user.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user.dto';
+import { encodePassword } from '../../shared/bcrypt/bcrypt';
 
 
 @Injectable()
@@ -15,6 +18,19 @@ export class UserService {
       private readonly userRepository: UserRepository,
       private eventEmitter: EventEmitter2
     ) {}
+
+  async registerUser(createUserDto: CreateUserDto) {
+    // const userFound = await this.userRepository.findOne({ where: { email: createUserDto.email } });
+    // if (userFound) {
+    //   throw new NotFoundException(`User with email ${createUserDto.email} already exists`);
+    // }
+    // console.log({ password: createUserDto.password  })
+    createUserDto.password = encodePassword(createUserDto.password);
+    const newUser = this.userRepository.create(createUserDto);
+    const saved = this.userRepository.save(newUser);
+    // this.eventEmitter.emit('user.created', saved);
+    return saved;
+  }
 
   async generateUser() {
     const url2 = 'https://dog.ceo/api/breeds/image/random';
@@ -34,8 +50,16 @@ export class UserService {
     newUser.country = user.location.country;
     newUser.age = user.dob.age
     const saved = await this.userRepository.save(newUser);
-    this.eventEmitter.emit('user.created', saved);
+    // this.eventEmitter.emit('user.created', saved);
     return saved;
+  }
+
+  async getUserById(id: number) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User #${id} not found`);
+    }
+    return user;
   }
 
   findAll() {
