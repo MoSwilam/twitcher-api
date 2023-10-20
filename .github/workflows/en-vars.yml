@@ -1,21 +1,18 @@
-name: ENV VARIABLES
+name: current workflow
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - dev
 # if Declared here it means that it is a global variable available for all jobs
 env:
-  APP_PORT: 3000
-  DB_PORT: 5432
-  DB_USER: admin
-  DB_PASS: admin
   DB_NAME: twitcher_db
-
 jobs:
   test:
     # env: # if Declared here it means that it is a local variable available for this job only
     #   PORT: 3000
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
