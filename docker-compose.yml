@@ -21,9 +21,16 @@ services:
       - twitcher-network
 
   twitcher-api:
-    image: twitcher-api:0.0.1
+    #image: twitcher-api:0.0.1
+    build:
+      context: .
+      dockerfile: ./apps/twitcher-api/Dockerfile
+      target: development
+    command: yarn run start:dev twitcher-api
     ports:
       - "3000:3000"
+    volumes:
+      - .:/usr/src/app
     depends_on:
       - postgres-db
     environment:

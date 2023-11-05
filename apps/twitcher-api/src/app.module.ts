@@ -1,7 +1,5 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-import { CatModule } from './modules/cat/cat.module';
-import { DogModule } from './modules/dog/dog.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,10 +8,11 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `${process.cwd()}/src/shared/config/env/${
+      envFilePath: `${process.cwd()}/apps/twitcher-api/src/shared/config/env/${
         process.env.NODE_ENV
       }.env`,
       isGlobal: true,
+      //validationSchema: Joi
     }),
     EventEmitterModule.forRoot(),
     TypeOrmModule.forRoot({
@@ -32,8 +31,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       synchronize: true,
     }),
     HttpModule,
-    CatModule,
-    DogModule,
     UserModule
   ]
 })

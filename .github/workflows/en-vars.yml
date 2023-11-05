@@ -37,6 +37,7 @@ jobs:
           echo "GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}"
 
   deploy:
+    environment: production
     needs: test
     runs-on: ubuntu-latest
     steps:

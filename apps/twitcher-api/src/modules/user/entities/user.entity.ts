@@ -1,4 +1,3 @@
-import { UpdateCatDto } from 'src/modules/cat/dto/update-cat.dto';
 import { Column, CreateDateColumn, Entity, EntityRepository, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from 'typeorm';
 
 @Entity()
